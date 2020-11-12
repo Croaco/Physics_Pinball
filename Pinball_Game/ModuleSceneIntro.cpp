@@ -9,7 +9,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = NULL;
+	background = circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -25,12 +25,23 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	background = App->textures->Load("textures/background.png");
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
+
+
+	//Starting polligons
+	//outsidebounds
+	polligons.add(App->physics->CreateChain(0, 0, outsideBounds, 112));
+	polligons.add(App->physics->CreateChain(0, 0, innerBound, 90));
+	polligons.add(App->physics->CreateChain(0, 0, bouncerLeft, 18));
+	polligons.add(App->physics->CreateChain(0, 0, bouncerRight, 16));
+	polligons.add(App->physics->CreateChain(0, 0, LLeft, 26));
+	polligons.add(App->physics->CreateChain(0, 0, LRight, 26));
 
 	return ret;
 }
@@ -46,6 +57,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	App->renderer->Blit(background,0,0,&bgRect);
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -64,7 +76,7 @@ update_status ModuleSceneIntro::Update()
 		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	/*if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
 		// Pivot 0, 0
 		int rick_head[64] = {
@@ -103,11 +115,11 @@ update_status ModuleSceneIntro::Update()
 		};
 
 		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
-	}
+	}*/
 
 	// Prepare for raycast ------------------------------------------------------
 	
-	iPoint mouse;
+	/*iPoint mouse;
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
 	int ray_hit = ray.DistanceTo(mouse);
@@ -164,7 +176,7 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
-
+	*/
 	return UPDATE_CONTINUE;
 }
 
