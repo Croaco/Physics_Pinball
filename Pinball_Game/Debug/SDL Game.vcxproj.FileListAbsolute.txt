@@ -1,2 +1,4 @@
 D:\Physics II\Physics_II_-_Box2D_-_Handout_04\Debug\2D Physics - class 4.exe
 D:\Physics II\Physics_II_-_Box2D_-_Handout_04\Debug\2D Physics - class 4.pdb
+C:\Users\sebas\Documents\GitHub\Physics_Pinball\Pinball_Game\Debug\2D Physics - class 4.exe
+C:\Users\sebas\Documents\GitHub\Physics_Pinball\Pinball_Game\Debug\2D Physics - class 4.pdb
